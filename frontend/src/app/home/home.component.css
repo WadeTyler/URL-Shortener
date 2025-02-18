@@ -1,0 +1,135 @@
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+hr {
+  width: 100%;
+  border: 1px solid;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+form label {
+  font-size: .8rem;
+  font-weight: bold;
+}
+
+form input, form select {
+  padding: 1rem;
+  border-radius: .5rem;
+  border: 2px solid transparent;
+
+  transition: all .3s ease-in-out;
+}
+
+form input:hover, form input:focus, form select:hover, form select:focus, .shortened-url-container section:hover {
+  border: 2px solid var(--accent);
+  outline: none;
+}
+
+form button {
+  padding: .75rem .5rem;
+  border-radius: .5rem;
+  border: 2px solid transparent;
+  background: var(--accent);
+  color: var(--primary);
+  font-size: 1.25rem;
+  font-weight: bold;
+
+  transition: all .3s ease-in-out;
+}
+
+form button:hover {
+  background: var(--accentLight);
+  cursor: pointer;
+}
+
+form button:active {
+  background: var(--accentDark);
+  cursor: pointer;
+}
+
+form .error-message {
+  color: var(--accentDark);
+  text-align: center;
+}
+
+form section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shortened-url-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.shortened-url-container p {
+  text-align: center;
+}
+
+.shortened-url-container section {
+  background: white;
+  width: 100%;
+
+  border-radius: 8px;
+  border: 2px solid transparent;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  transition: all .3s ease-in-out;
+}
+
+.shortened-url-container section a {
+  padding: .5rem;
+}
+
+.shortened-url-container section button {
+  height: 100%;
+  border: none;
+  background: var(--accent);
+  color: white;
+  border-radius: 0 8px 8px 0;
+  padding: .5rem;
+
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+}
+
+.shortened-url-container section button:hover {
+  background: var(--accentLight);
+}
+
+.shortened-url-container section button:active {
+  background: var(--accentDark);
+}
+
+.shortened-url-container .go-back-btn {
+  color: var(--accent);
+  cursor: pointer;
+
+  transition: all .3s ease-in-out;
+}
+
+.shortened-url-container .go-back-btn:hover {
+  color: var(--accentLight);
+}
+
+.shortened-url-container .go-back-btn:active {
+  color: var(--accentDark);
+}
+
