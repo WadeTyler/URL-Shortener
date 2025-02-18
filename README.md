@@ -8,7 +8,7 @@ A fast, simple, and reliable URL shortening service built with TypeScript, Angul
 - **Configurable Expiration**: Choose expiration periods from 1 to 90 days
 - **One-Click Copy**: Easily copy shortened URLs with a single click
 - **Fast Redirection**: Efficient URL validation and redirection system
-- **Smart Caching**: Recent URLs are cached in memory for faster access
+- **Smart Caching**: Recent and Most used URLs are cached in memory for faster access
 - **Automatic Cleanup**: Expired URLs are automatically removed from the system
 
 ## Tech Stack
@@ -56,6 +56,7 @@ A fast, simple, and reliable URL shortening service built with TypeScript, Angul
 
 4. **Performance Optimization**
     - Recently accessed URLs are cached in memory
+    - Most used URLs are cached in memory
     - Automatic cleanup of expired URLs
     - Efficient code generation algorithm
 
@@ -101,7 +102,7 @@ The application can be containerized using the included Dockerfile. The live ver
 
 - Minimum code length: 3 characters
 - Maximum code length: 8 characters
-- Support for up to 1000 cached URLs in memory
+- Support for up to 10,000 cached URLs in memory
 - Automatic case normalization for codes
 - Cross-origin support for API endpoints
 - Responsive web design

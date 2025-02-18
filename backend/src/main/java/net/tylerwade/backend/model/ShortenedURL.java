@@ -1,5 +1,6 @@
 package net.tylerwade.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,9 @@ public class ShortenedURL {
     private Date createdAt;
 
     private Date expires;
+
+    @JsonIgnore
+    @Column(nullable = false)
+    private Long uses = 0L;
 
 }

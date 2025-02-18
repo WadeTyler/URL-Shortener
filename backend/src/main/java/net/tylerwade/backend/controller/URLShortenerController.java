@@ -94,7 +94,7 @@ public class URLShortenerController {
         }
 
         // Check if shortenedURL exists in memory
-        ShortenedURL  shortenedURL = urlShortenerService.getFromRecentUrls(code);
+        ShortenedURL  shortenedURL = urlShortenerService.getFromMemory(code);
 
         // If it does not exist in memory
         if (shortenedURL == null) {
@@ -114,13 +114,17 @@ public class URLShortenerController {
             // Remove from repo
             shortenedURLRepo.delete(shortenedURL);
             // Remove from memory
-            urlShortenerService.removeFromRecentUrls(code);
+            urlShortenerService.removeFromMemory(code);
 
             return new ResponseEntity<>(new ResponseMessage<>(StatusTypes.BAD_REQUEST, "This code has expired and is now invalid."), HttpStatus.BAD_REQUEST);
         }
 
         // Add to memory
         urlShortenerService.addToRecentUrls(shortenedURL);
+
+        // Update uses
+        shortenedURL.setUses(shortenedURL.getUses() + 1);
+        shortenedURLRepo.save(shortenedURL);
 
         // Return the shortenedURL
         return new ResponseEntity<>(new ResponseMessage<>(shortenedURL, StatusTypes.SUCCESS, "Code is valid!"), HttpStatus.OK);

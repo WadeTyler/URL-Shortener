@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 @Slf4j
@@ -22,9 +23,11 @@ public class URLShortenerService {
 
     private int maxPossibleCodes = calculateMaxPossibleCodes();
 
-    private int maxRecentURLSize = 1000;
+    private int maxRecentURLSize = 5000;
+    private HashMap<String, ShortenedURL> recentURLs = new HashMap<>();     // <code, shortenedURL>
 
-    private HashMap<String, ShortenedURL> recentURLs = new HashMap<>();
+    private int maxMostUsedURLSize = 5000;
+    private HashMap<String, ShortenedURL> mostUsedURLs = new HashMap<>();   // <code, shortenedURL>
 
     @Autowired
     ShortenedURLRepository shortenedURLRepo;
@@ -63,12 +66,21 @@ public class URLShortenerService {
 
     }
 
-    public ShortenedURL getFromRecentUrls(String code) {
-        return recentURLs.get(code);
+    public ShortenedURL getFromMemory(String code) {
+        // Check if in mostUsed
+        ShortenedURL shortenedURL = mostUsedURLs.get(code);
+
+        if (shortenedURL == null) {
+            // Check if in recents if not
+            shortenedURL = recentURLs.get(code);
+        }
+
+        return shortenedURL;
     }
 
-    public void removeFromRecentUrls(String code) {
+    public void removeFromMemory(String code) {
         recentURLs.remove(code);
+        mostUsedURLs.remove(code);
     }
 
     public void addToRecentUrls(ShortenedURL shortenedURL) {
@@ -79,6 +91,18 @@ public class URLShortenerService {
         recentURLs.put(shortenedURL.getCode(), shortenedURL);
     }
 
+    // Used to calculate and set mostUsedURLs hashmap
+    public void calculateMostUsedUrls() {
+
+        // Clear Hashmap
+        mostUsedURLs.clear();
+
+        List<ShortenedURL> mostUsedList = shortenedURLRepo.findAllOrderByUsesLimitedTo(maxMostUsedURLSize);
+        // Convert list to hashmap
+        for (ShortenedURL shortenedURL : mostUsedList) {
+            mostUsedURLs.put(shortenedURL.getCode(), shortenedURL);
+        }
+    }
 
     // -------------- Private --------------
 
