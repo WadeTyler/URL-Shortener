@@ -3,7 +3,6 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {ShortenerService} from '../../shortener.service';
 import {ShortenedURL} from '../../types/ShortenedURL';
 import {Clipboard, ClipboardModule} from '@angular/cdk/clipboard';
-import {codePrefix} from '../../constants/constants';
 import {LoaderComponent} from '../loader/loader.component';
 import {environment} from '../../environments/environment';
 
@@ -17,7 +16,7 @@ import {environment} from '../../environments/environment';
   template: `
     <div class="content">
       <div class="container">
-        <h1>Wade's URL Shortener</h1>
+        <h1>USHO Pro - URL Shortener</h1>
         <p style="text-align: center; font-style: italic; color: var(--accent)">Fast, Simple, Reliable</p>
         <hr>
         @if (!shortenedURL) {
@@ -71,11 +70,10 @@ import {environment} from '../../environments/environment';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  title = 'Wade URL Shortener';
+  title = 'USHO Pro';
 
   codePrefix = environment.codePrefix;
-
-  shortenerService: ShortenerService = inject(ShortenerService);
+shortenerService: ShortenerService = inject(ShortenerService);
   shortenedURL: ShortenedURL | undefined;
 
   shortenURLForm = new FormGroup({

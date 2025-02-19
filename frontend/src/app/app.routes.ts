@@ -8,12 +8,12 @@ export const routes: Routes = [
   {
     path: "",
     component: HomeComponent,
-    title: "Wade's URL Shortener"
+    title: "Shorten a URL | USHO Pro"
   },
   {
     path: ":code",
     component: CodeComponent,
-    title: "URL Validator | Wade's URL Shortener"
+    title: "Validating URL | USHO Pro"
   },
 
 ];

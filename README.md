@@ -1,6 +1,6 @@
 # URL Shortener
 
-A fast, simple, and reliable URL shortening service built with TypeScript, Angular, and Spring Boot Java. Live at [url.tylerwade.net](https://url.tylerwade.net)
+A fast, simple, and reliable URL shortening service built with TypeScript, Angular, and Spring Boot Java. Live at [usho.pro](https://usho.pro)
 
 ## Features
 
@@ -96,7 +96,7 @@ Validate and retrieve URL information for redirection
 
 ## Production Deployment
 
-The application can be containerized using the included Dockerfile. The live version is hosted at [url.tylerwade.net](https://url.tylerwade.net).
+The application can be containerized using the included Dockerfile. The live version is hosted at [usho.pro](https://usho.pro).
 
 ## Features Highlights
 
