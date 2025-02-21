@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Slf4j
 @Component
 public class ScheduledTasks {
@@ -19,7 +21,7 @@ public class ScheduledTasks {
 
     @Scheduled(fixedRate = 86400000)
     public void clearExpiredShortenedURLs() {
-        shortenedURLRepo.deleteExpiredURLs();
+        shortenedURLRepo.deleteAllByExpiresBefore(new Date());
         log.info("Expired URLs deleted.");
     }
 

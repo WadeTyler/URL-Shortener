@@ -1,22 +1,23 @@
 services:
-  # Postgres Database
+
+  # Mongo Database
   database:
-    image: postgres:17.3-alpine
+    image: mongo:latest
     container_name: url-shortener-database
-    volumes:
-      - db:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "27017:27017"
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d postgres"]
-      interval: 30s
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      interval: 10s
       timeout: 10s
       retries: 5
+      start_period: 40s
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mongodb_data:/data/db
 
   # Spring boot server
   backend:
@@ -30,7 +31,9 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
-      DB_URL: ${DB_URL}
+      DB_AUTH_DATABASE: ${DB_AUTH_DATABASE}
+      DB_PORT: ${DB_PORT}
+      DB_HOST: ${DB_HOST}
 
   # Angular Frontend
   frontend:
@@ -41,4 +44,4 @@ services:
     depends_on:
       - backend
 volumes:
-  db:
+  mongodb_data:
