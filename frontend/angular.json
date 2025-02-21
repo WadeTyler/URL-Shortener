@@ -73,7 +73,7 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "allowedHosts": ["url.tylerwade.net", "www.url.tylerwade.net"]
+            "allowedHosts": ["usho.pro", "www.usho.pro"]
           }
         },
         "extract-i18n": {
