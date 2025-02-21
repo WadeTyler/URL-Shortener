@@ -1,30 +1,23 @@
 package net.tylerwade.backend.repository;
 
-import jakarta.transaction.Transactional;
 import net.tylerwade.backend.model.ShortenedURL;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ShortenedURLRepository extends JpaRepository<ShortenedURL, Integer> {
+public interface ShortenedURLRepository extends MongoRepository<ShortenedURL, String> {
 
     public boolean existsShortenedURLByCode(String code);
     public Optional<ShortenedURL> findShortenedURLByUrl(String url);
     public Optional<ShortenedURL> findShortenedURLByCode(String code);
 
+    public void deleteAllByExpiresBefore(Date date);
 
-    @Modifying
-    @Transactional
-    @Query("DELETE FROM ShortenedURL s WHERE s.expires <= CURRENT_TIMESTAMP")
-    public void deleteExpiredURLs();
-
-    @Query("SELECT s FROM ShortenedURL s ORDER BY s.uses LIMIT ?1")
-    public List<ShortenedURL> findAllOrderByUsesLimitedTo(int limit);
+    public List<ShortenedURL> findFirstOrderByUses(int first);
 
 
 }

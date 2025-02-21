@@ -97,7 +97,7 @@ public class URLShortenerService {
         // Clear Hashmap
         mostUsedURLs.clear();
 
-        List<ShortenedURL> mostUsedList = shortenedURLRepo.findAllOrderByUsesLimitedTo(maxMostUsedURLSize);
+        List<ShortenedURL> mostUsedList = shortenedURLRepo.findFirstOrderByUses(maxMostUsedURLSize);
         // Convert list to hashmap
         for (ShortenedURL shortenedURL : mostUsedList) {
             mostUsedURLs.put(shortenedURL.getCode(), shortenedURL);
