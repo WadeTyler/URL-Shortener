@@ -24,7 +24,7 @@ A fast, simple, and reliable URL shortening service built with TypeScript, Angul
 - Spring Data JPA
 - Lombok
 - Apache Commons URL Validator
-- PostgreSQL Database
+- MongoDB Database
 
 ### Styling (11.3% CSS, 1.8% HTML)
 - Custom CSS
