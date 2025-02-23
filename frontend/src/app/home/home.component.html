@@ -1,0 +1,102 @@
+<div class="theme-switch-wrapper">
+  <label class="theme-switch" for="checkbox">
+    <input type="checkbox" id="checkbox" (change)="handleThemeSwitch($event)"/>
+    <div class="slider round"></div>
+  </label>
+  <span class="theme-label">Dark Mode</span>
+</div>
+
+<div class="background">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<div class="container">
+  <header>
+    <div class="logo-container">
+      <div class="logo">USHO</div>
+      <span class="pro-badge">PRO</span>
+    </div>
+    <p class="tagline">Transform your links instantly</p>
+  </header>
+
+  <main>
+    <div class="glass-container">
+      <form id="urlForm" [formGroup]="shortenURLForm" (submit)="handleSubmit()">
+        <div class="input-group">
+          <div class="modern-input">
+            <input
+              formControlName="url"
+              type="url"
+              id="longUrl"
+              name="longUrl"
+              placeholder=" "
+              required
+              [value]="shortenURLForm.value.url"
+            >
+            <label for="longUrl">Enter your URL</label>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="modern-input">
+            <select id="expiration" formControlName="expires" name="expiration" required [value]="shortenURLForm.value.expires">
+              <option value="1">1 Day</option>
+              <option value="3">3 Days</option>
+              <option value="7">7 Days</option>
+              <option value="14">14 Days</option>
+              <option value="30">30 Days</option>
+              <option value="90">90 Days</option>
+              <option value="365">1 Year</option>
+            </select>
+            <label for="expiration">Expiration Time</label>
+          </div>
+        </div>
+
+        <button type="submit" id="submitButton" [disabled]="shortenerService.isShorteningURL">
+          <span>Shorten URL</span>
+        </button>
+      </form>
+    </div>
+
+    @if (shortenedURL) {
+      <div id="result" class="result-container glass-container">
+        <h3>Your Shortened URL</h3>
+        <div class="shortened-url">
+          <input type="text" id="shortUrl" readonly [value]="codePrefix +  shortenedURL.code">
+          <button id="copyButton" (click)="copyURL()">
+            <span>Copy</span>
+          </button>
+        </div>
+      </div>
+    }
+
+  </main>
+
+  <footer>
+    <div class="wave-decoration">
+      <svg viewBox="0 0 120 28">
+        <defs>
+          <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blur" />
+            <feColorMatrix in="blur" values="
+                                1 0 0 0 0
+                                0 1 0 0 0
+                                0 0 1 0 0
+                                0 0 0 13 -9" result="goo" />
+          </filter>
+        </defs>
+        <g filter="url(#goo)">
+          <circle cx="15" cy="15" r="4" />
+          <circle cx="35" cy="15" r="4" />
+          <circle cx="55" cy="15" r="4" />
+          <circle cx="75" cy="15" r="4" />
+          <circle cx="95" cy="15" r="4" />
+        </g>
+      </svg>
+    </div>
+    <p>© 2020-2025 USHO Pro. All rights reserved.</p>
+  </footer>
+
+</div>

@@ -4,15 +4,28 @@ import { Component } from '@angular/core';
   selector: 'app-loader',
   imports: [],
   template: `
-    <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg" class="loader">
-      <circle cx="35" cy="35" r="33" stroke="url(#paint0_linear_2_2)" stroke-width="4"/>
-      <defs>
-        <linearGradient id="paint0_linear_2_2" x1="35" y1="0" x2="35" y2="70" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#FFC400"/>
-          <stop offset="1" stop-color="white"/>
-        </linearGradient>
-      </defs>
-    </svg>
+      <div class="wave-decoration">
+        <svg viewBox="0 0 120 28">
+          <defs>
+            <filter id="goo">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="1" result="blur" />
+              <feColorMatrix in="blur" values="
+                                1 0 0 0 0
+                                0 1 0 0 0
+                                0 0 1 0 0
+                                0 0 0 13 -9" result="goo" />
+            </filter>
+          </defs>
+          <g filter="url(#goo)">
+            <circle cx="15" cy="15" r="4" />
+            <circle cx="35" cy="15" r="4" />
+            <circle cx="55" cy="15" r="4" />
+            <circle cx="75" cy="15" r="4" />
+            <circle cx="95" cy="15" r="4" />
+          </g>
+        </svg>
+      </div>
+      <p>© 2020-2025 USHO Pro. All rights reserved.</p>
   `,
   styleUrl: './loader.component.css'
 })

@@ -1,10 +1,11 @@
 import {Component, inject} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators, ValueChangeEvent} from '@angular/forms';
 import {ShortenerService} from '../../shortener.service';
 import {ShortenedURL} from '../../types/ShortenedURL';
 import {Clipboard, ClipboardModule} from '@angular/cdk/clipboard';
 import {LoaderComponent} from '../loader/loader.component';
 import {environment} from '../../environments/environment';
+import {HttpEventType} from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -13,67 +14,14 @@ import {environment} from '../../environments/environment';
     ClipboardModule,
     LoaderComponent
   ],
-  template: `
-    <div class="content">
-      <div class="container">
-        <h1>USHO Pro - URL Shortener</h1>
-        <p style="text-align: center; font-style: italic; color: var(--accent)">Fast, Simple, Reliable</p>
-        <hr>
-        @if (!shortenedURL) {
-          <form [formGroup]="shortenURLForm" (submit)="handleSubmit()">
-            <label for="url">URL</label>
-            <input type="text" id="url" formControlName="url" placeholder="URL - Ex: https://google.com" required>
-
-            <label for="expires">EXPIRES</label>
-            <select id="expires" formControlName="expires" [value]="shortenURLForm.value.expires" required>
-              <option value="1">1 Day</option>
-              <option value="3">3 Days</option>
-              <option value="7">7 Days</option>
-              <option value="14">14 Days</option>
-              <option value="30">30 Days</option>
-              <option value="90">90 Days</option>
-            </select>
-
-            @if(!shortenerService.isShorteningURL) {
-              <button>Shorten URL</button>
-            }
-            @else {
-              <section class="">
-                <app-loader></app-loader>
-              </section>
-            }
-
-            @if (shortenerService.shortenURLErrorMessage) {
-              <p class="error-message">{{ shortenerService.shortenURLErrorMessage }}</p>
-            }
-          </form>
-        }
-
-        @if (shortenedURL) {
-          <div class="shortened-url-container">
-            <p>URL Shortened!</p>
-            <section class="">
-              <a href="{{ codePrefix }}{{ shortenedURL.code }}" target="_blank">{{ codePrefix }}{{ shortenedURL.code }}</a>
-              <button>
-                <span class="material-symbols-outlined" (click)="copyURL()">file_copy</span>
-              </button>
-            </section>
-            @if (isCopied) {
-              <p>URL Copied</p>
-            }
-            <p class="go-back-btn" (click)="resetShortenedURL()">Shorten another URL</p>
-          </div>
-        }
-      </div>
-    </div>
-  `,
+  templateUrl: 'home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
   title = 'USHO Pro';
 
   codePrefix = environment.codePrefix;
-shortenerService: ShortenerService = inject(ShortenerService);
+  shortenerService: ShortenerService = inject(ShortenerService);
   shortenedURL: ShortenedURL | undefined;
 
   shortenURLForm = new FormGroup({
@@ -83,6 +31,17 @@ shortenerService: ShortenerService = inject(ShortenerService);
 
   clipboard: Clipboard = inject(Clipboard);
   isCopied: boolean = false;
+
+  isDarkTheme: boolean = false;
+
+  ngOnInit(): void {
+    const theme = localStorage.getItem('data-theme');
+    this.isDarkTheme = theme === 'dark';
+    if (this.isDarkTheme) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      (document.getElementById('checkbox') as HTMLInputElement).checked = true;
+    }
+  }
 
   async handleSubmit() {
 
@@ -107,7 +66,7 @@ shortenerService: ShortenerService = inject(ShortenerService);
     this.shortenedURL = undefined;
 
     // Reset form values
-    this.shortenURLForm.setValue({ url: "", expires: "7" });
+    this.shortenURLForm.setValue({url: "", expires: "7"});
     this.isCopied = false;
   }
 
@@ -115,5 +74,12 @@ shortenerService: ShortenerService = inject(ShortenerService);
     if (!this.shortenedURL) return;
     this.clipboard.copy(this.codePrefix + this.shortenedURL.code);
     this.isCopied = true;
+  }
+
+  handleThemeSwitch(e: any) {
+    const isCheck = (e.target as HTMLInputElement).checked;
+    this.isDarkTheme = isCheck;
+    document.documentElement.setAttribute('data-theme', isCheck ? 'dark' : 'light');
+    localStorage.setItem('data-theme', isCheck ? 'dark' : 'light');
   }
 }

@@ -10,19 +10,28 @@ import {LoaderComponent} from '../loader/loader.component';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, LoaderComponent],
   template: `
-    <div>
-      @if (!shortenerService.isValidatingCode && shortenerService.validateCodeErrorMessage) {
-        <p>Sorry, the URL you're looking for is invalid.</p>
-        <p>{{ shortenerService.validateCodeErrorMessage }}</p>
-        <button (click)="navigateToShorten()">Shorten a URL</button>
-      }
-      @if (shortenerService.isValidatingCode) {
 
-        <section>
-          <app-loader></app-loader>
-        </section>
+    <div class="background">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
 
-      }
+    <div class="container">
+      <main>
+        @if (!shortenerService.isValidatingCode && shortenerService.validateCodeErrorMessage) {
+          <p class="tagline">Sorry, the URL you're looking for is invalid.</p>
+          <p>{{ shortenerService.validateCodeErrorMessage }}</p>
+          <button (click)="navigateToShorten()">Shorten a URL</button>
+        }
+        @if (shortenerService.isValidatingCode) {
+
+          <section>
+            <app-loader></app-loader>
+          </section>
+
+        }
+      </main>
 
     </div>
   `,
@@ -34,6 +43,11 @@ export class CodeComponent {
   shortenerService: ShortenerService = inject(ShortenerService);
 
   code: string = "";
+
+  ngOnInit(): void {
+    // Force dark mode
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
 
   constructor() {
     this.code = this.route.snapshot.params["code"];
