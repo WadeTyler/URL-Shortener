@@ -13,24 +13,24 @@ A fast, simple, and reliable URL shortening service built with TypeScript, Angul
 
 ## Tech Stack
 
-### Frontend (42.6% TypeScript, 1.9% JavaScript)
+### Frontend (32.7% TypeScript)
 - Angular
 - TypeScript
 - Angular Material CDK
 - Reactive Forms
 
-### Backend (40.6% Java)
+### Backend (36.7% Java)
 - Spring Boot
 - Spring Data JPA
 - Lombok
 - Apache Commons URL Validator
 - MongoDB Database
 
-### Styling (11.3% CSS, 1.8% HTML)
+### Styling (19.1% CSS, 10.0% HTML)
 - Custom CSS
 - Responsive Design
 
-### Infrastructure (1.8% Dockerfile)
+### Infrastructure (1.5% Dockerfile)
 - Docker support for containerization
 - Environment-based configuration
 
