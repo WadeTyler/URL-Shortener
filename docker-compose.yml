@@ -23,6 +23,7 @@ services:
   backend:
     build: ./backend
     container_name: url-shortener-backend
+    restart: unless-stopped
     ports:
       - "8081:8080"
     depends_on:
@@ -39,6 +40,7 @@ services:
   frontend:
     build: ./frontend
     container_name: url-shortener-frontend
+    restart: unless-stopped
     ports:
       - "4201:4200"
     depends_on:
